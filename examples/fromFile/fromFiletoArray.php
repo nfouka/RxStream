@@ -4,6 +4,7 @@ include __DIR__ . "/../../vendor/autoload.php";
 
 $source = new \Rx\React\FromFileObservable(__DIR__ . "/../test.csv");
 
+
 $source
     ->cut()
     ->map("str_getcsv")

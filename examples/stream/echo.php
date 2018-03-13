@@ -2,17 +2,11 @@
 
 include __DIR__ . "/../../vendor/autoload.php";
 
-$read = new \Rx\React\StreamSubject(STDIN);
 
-$read
-    ->map("trim")
-    ->takeWhile(function ($x) {
-        return $x != 15;
-    })
-    ->map(function ($x) {
-        return "echo $x \n";
-    })
-    ->doOnCompleted(function () {
-        echo "Thank you for playing echo";
-    })
-    ->subscribe(new \Rx\React\StreamSubject(STDOUT));
+$source = new \Rx\React\FromFileObservable("source.txt");
+$dest   = new \Rx\React\ToFileObserver("dest.txt");
+
+$source
+->cut()
+->subscribe($dest);
+
